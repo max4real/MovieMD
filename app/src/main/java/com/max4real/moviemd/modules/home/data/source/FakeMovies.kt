@@ -15,3 +15,12 @@ class FakeMovies @Inject constructor() {
         )
     }
 }
+
+
+class FakeMoviesTest @Inject constructor(
+    val fakeMovies: FakeMovies
+) {
+    suspend fun getTest(): List<String> {
+        return fakeMovies.getMovies().map { it.name }
+    }
+}

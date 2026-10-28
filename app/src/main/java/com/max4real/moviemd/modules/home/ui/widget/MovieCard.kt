@@ -18,24 +18,36 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.max4real.moviemd.R
 
 @Composable
 fun MovieCard(
     title: String,
+    isFav: Boolean = false,
+    onTapFav: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Card(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Row(
@@ -66,6 +78,16 @@ fun MovieCard(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+            Spacer(Modifier.weight(1f))
+            IconButton(onClick = onTapFav) {
+                Icon(
+                    painter = if (isFav)
+                        painterResource(R.drawable.heart_fill)
+                    else
+                        painterResource(R.drawable.heart),
+                    contentDescription = "Favorite"
+                )
+            }
         }
     }
 }
@@ -84,11 +106,10 @@ fun preview1() {
     )
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun preview() {
-    MovieCard("Catch me if you can")
+private fun MovieCardFavoritePreview() {
+    MovieCard(title = "Inception", isFav = true, onTapFav = {})
 }
 
 @Preview(showBackground = true, heightDp = 1000)
@@ -132,4 +153,17 @@ private fun ModifierOrderPreview() {
                 .size(50.dp)
         )
     }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun preview4() {
+    Box(
+        modifier = Modifier
+//            .padding(5.dp)
+            .size(100.dp)
+            .clip(RoundedCornerShape(50.dp))
+            .background(Color.Red)
+    ) {}
 }

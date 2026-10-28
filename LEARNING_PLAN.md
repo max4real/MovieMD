@@ -9,30 +9,30 @@ Each lesson changes something visible in the app. Concept first, then code.
 - [x] `@HiltAndroidApp` on the Application class, `@AndroidEntryPoint` on `MainActivity`
 - [x] `@HiltViewModel` and `@Inject constructor`
 - [x] `@Binds` (interface to implementation) vs `@Provides` (library objects)
-- [x] Repository chain: `HomeVM` -> `MovieRepository` -> `MovieFakeDataSource`
+- [x] Repository chain: `HomeVM` -> `MovieRepo` -> `FakeMovies`
 - [ ] Later, when needed: qualifiers (`@Named`), scopes beyond `@Singleton`, Hilt testing
 
 ## Phase 2: Compose basics
 
-| # | Lesson | Visible result in app |
-|---|---|---|
-| 1 | Composables and recomposition: what `@Composable` means, why a function re-runs | `MovieCard` composable |
-| 2 | Layouts and modifiers: `Row`, `Column`, `Box`, modifier order, `LazyColumn` | Styled card list |
-| 3 | State: `remember`, `mutableStateOf`, how `collectAsState` relates | Favorite toggle on a card |
-| 4 | State hoisting: state down, events up | Stateless `MovieCard` plus a `HomePage` that owns state |
-| 5 | UI state in the ViewModel: `sealed interface`, loading / error / success | `HomeUiState` with spinner and retry |
-| 6 | Material 3 and theming: colors, typography, common components | Themed Home screen |
-| 7 | Side effects: `LaunchedEffect` and friends | Actions on screen load |
+| # | Status | Lesson | Visible result in app |
+|---|---|---|---|
+| 1 | Done | Composables and recomposition: what `@Composable` means, why a function re-runs | `MovieCard` composable |
+| 2 | Done | Layouts and modifiers: `Row`, `Column`, `Box`, modifier order, `LazyColumn` | Styled card list |
+| 3 | Done | State: `remember`, `mutableStateOf`, how `collectAsState` relates | Favorite toggle on a card |
+| 4 | Done | State hoisting: state down, events up | Stateless `MovieCard`, favorites owned by `HomeVM` |
+| 5 | Done | UI state in the ViewModel: `sealed interface`, loading / error / success | `HomeUiState`, `HomePage` + stateless `HomeContent` with previews |
+| 6 | Next | Material 3 and theming: colors, typography, common components | Themed Home screen |
+| 7 | | Side effects: `LaunchedEffect` and friends | Actions on screen load |
 
 ## Phase 3: Kotlin, learned in context
 
 Picked up inside the lessons above, not as a separate course:
 
-- [ ] Null safety: `?`, `?:`, `!!`
-- [ ] Lambdas and trailing lambda syntax
-- [ ] `data class`, `data object`, `sealed` types
+- [x] Null safety: `?`, `?:`, `!!`
+- [x] Lambdas and function types (`() -> Unit`, `(String) -> Unit`)
+- [x] `data class`, `data object`, `sealed` types
 - [ ] Extension and scope functions: `let`, `apply`
-- [ ] Coroutines and Flow: `viewModelScope`, `StateFlow`
+- [ ] Coroutines and Flow: `viewModelScope` and `StateFlow` are used; `Flow` operators, `collect` and dispatchers still to learn
 
 ## Phase 4: Real app features
 

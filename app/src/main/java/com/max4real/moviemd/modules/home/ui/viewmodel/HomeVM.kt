@@ -10,8 +10,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class HomeVM @Inject constructor(
@@ -20,6 +22,15 @@ class HomeVM @Inject constructor(
     private val _state = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val state = _state.asStateFlow()
 
+    private val _favIds = MutableStateFlow<Set<String>>(emptySet())
+    val favIds = _favIds.asStateFlow()
+
+    fun toggleFav(id: String) {
+        _favIds.update { ids ->
+            if (id in ids) ids - id else ids + id
+        }
+    }
+
     init {
         load()
     }
@@ -27,11 +38,12 @@ class HomeVM @Inject constructor(
     fun load() {
         viewModelScope.launch {
             _state.value = HomeUiState.Loading
-
             _state.value = try {
                 HomeUiState.Success(movieRepo.getMovies())
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
-                HomeUiState.Error(e.message ?: "sorry")
+                HomeUiState.Error(e.message ?: "Something went wrong")
             }
         }
     }
